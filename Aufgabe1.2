@@ -1,0 +1,59 @@
+using System;
+
+namespace Aufgabe_1b
+{
+    class Program
+    {
+        static string[] subjects = { "Harry", "Hermine", "Ron", "Hagrid", "Snape", "Dumbledore" };
+        static string[] verbs = { "braut", "liebt", "studiert", "hasst", "zaubert", "zerstört" };
+        static string[] objects = { "Zaubertränke", "den Grimm", "Lupin", "Hogwards", "die Karte des Rumtreibers", "Dementoren" };
+        static string[] subjectsActual = subjects;
+        static string[] verbsActual = verbs;
+        static string[] objectsActual = objects;
+        static int counter = 0;
+
+        static void Main(string[] args)
+        {
+            string[] zwischenspeicher={"","","","","",""};
+            for (int a = 0; a <= subjects.Length-1; a++)
+            {   
+                zwischenspeicher[a]=GetVerse();
+                Console.WriteLine(zwischenspeicher[a]);
+            }
+
+        }
+        public static string GetVerse()
+        {
+            Random subject = new Random();
+            Random verb = new Random();
+            Random objectt = new Random();
+
+            int i = subject.Next(0, subjectsActual.Length - counter);
+            int j = verb.Next(0, verbs.Length - counter);
+            int k = objectt.Next(0, objects.Length - counter);
+
+            //string[] zwischenspeicher = { subjectsActual[i], verbs[j], objects[k] };
+            string ausgabe = subjectsActual[i] + " " + verbsActual[j] + " " + objectsActual[k] + "\n";
+
+            MoveArray(i, subjectsActual);
+            MoveArray(j, verbsActual);
+            MoveArray(k, objectsActual);
+            counter = counter + 1;
+  
+            //for (int a = 0; a <= subjectsActual.Length-1; a++) {
+            //    Console.WriteLine(subjectsActual[a]);
+            //}
+
+            return ausgabe;
+            
+        }
+        private static void MoveArray(int index, string[] s)
+        {
+            for (int a = 0; a <= s.Length-1; a++) {
+                if (a > index) {
+                    s[a-1] = s[a];
+                }
+            }
+        }
+    }
+}
