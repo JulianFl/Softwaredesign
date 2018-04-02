@@ -1,0 +1,127 @@
+using System;
+
+namespace Aufgabe_1
+{
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            //Console.WriteLine("Gebe w, k oder o ein: ");
+            //string eingabe = Console.ReadLine();
+            string eingabe = args[0];
+            double durchmesser = Double.Parse(args[1]);
+
+
+            /*
+            Console.WriteLine("args[0]: " + args[0]);
+            Console.WriteLine("args[1]: " + args[1]);
+             */
+
+            if (eingabe == "w")
+            {
+                double volumen = getCubeVolume(durchmesser);
+                double oberflaeche = getCubeSurface(durchmesser);
+                string strOberflaeche = "Ihre Oberfäche beträgt: " + oberflaeche;
+                string strVolumen = "Ihr Volumen beträgt: " + volumen;
+
+                Console.WriteLine(strOberflaeche + "   " + strVolumen);
+
+            }
+            else if (eingabe == "k")
+            {
+
+                double volumen = getKugelVolume(durchmesser);
+                double oberflaeche = getKugelSurface(durchmesser);
+
+                string strOberflaeche = "Ihre Oberfäche beträgt: " + oberflaeche;
+                string strVolumen = "Ihr Volumen beträgt: " + volumen;
+
+                Console.WriteLine(strOberflaeche + "  " + strVolumen);
+
+
+            }
+            else if (eingabe == "o")
+            {
+
+
+                double volumen = getOktaederVolume(durchmesser); ;
+                double oberflaeche = getOktaederSurface(durchmesser);
+
+                string strOberflaeche = "Ihre Oberfäche beträgt: " + oberflaeche;
+                string strVolumen = "Ihr Volumen beträgt: " + volumen;
+
+                Console.WriteLine(strOberflaeche + "  " + strVolumen);
+            }
+
+
+
+        }
+
+        private static double getCubeVolume(double durchmesser)
+        {
+            double volumen = durchmesser * durchmesser * durchmesser;
+            volumen = Math.Round(volumen, 2);
+
+            return volumen;
+        }
+
+        private static double getCubeSurface(double durchmesser)
+        {
+            double oberflaeche = 6 * durchmesser * durchmesser;
+            oberflaeche = Math.Round(oberflaeche, 2);
+
+            return oberflaeche;
+        }
+
+        private static double getKugelVolume(double durchmesser)
+        {
+            double volumen = (Math.PI * durchmesser * durchmesser * durchmesser) / 6;
+            volumen = Math.Round(volumen, 2);
+            return volumen;
+        }
+
+        private static double getKugelSurface(double durchmesser)
+        {
+            double oberflaeche = Math.PI * durchmesser * durchmesser;
+            oberflaeche = Math.Round(oberflaeche, 2);
+
+            return oberflaeche;
+        }
+
+        private static double getOktaederVolume(double durchmesser)
+        {
+            double volumen = ((Math.Sqrt(2)) * durchmesser * durchmesser * durchmesser) / 3;
+            volumen = Math.Round(volumen, 2);
+            return volumen;
+        }
+
+        private static double getOktaederSurface(double durchmesser)
+        {
+            double oberflaeche = 2 * (Math.Sqrt(3)) * durchmesser * durchmesser;
+            oberflaeche = Math.Round(oberflaeche, 2);
+            return oberflaeche;
+        }
+    }
+}
+
+
+
+
+/* public double oberflaecheKubus(double kantenlaenge,double durchmesser){
+     double oberflaeche= 6*kantenlaenge*kantenlaenge;
+     return oberflaeche;
+ }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
