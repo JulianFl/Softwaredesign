@@ -1,4 +1,4 @@
-1) Person ist rekursiv. Das heißt, es wird abgefragt ob der Nachname ungleich Battenberg ist, 
+1) `public static Person Find(Person person)` ist rekursiv. Das heißt, es wird abgefragt ob der Nachname ungleich Battenberg ist, 
   wenn die Bedingung zutrifft wird die person zurückgegeben und die Methode "Find" wird nochmal ausgeführt. 
   Hier wird nach der Mutter und nach dem Vater gesucht und zurückgegeben.
   
