@@ -12,7 +12,7 @@ namespace Aufgabe5
         public class Person
         {
             string name;
-            int age;
+            int alter;
         }
 
         public class Teilnehmer : Person
@@ -25,9 +25,8 @@ namespace Aufgabe5
         }
         public class Dozent : Person
         {
-            double raum;
-            DateTime bueroStunden;
-
+            string raum;
+        	string sprechstunde;
             string[] kurse;
 
             
@@ -35,9 +34,9 @@ namespace Aufgabe5
         public class Kurs
         {
             string titel;
-            DateTime kursStunden;
-            float raum;
-            string dozent;
+            double raum;
+            Dozent dozent;
+            double uhrzeit;
             string[] teilnehmer;
         }
     }
