@@ -1,0 +1,44 @@
+using System;
+
+namespace Aufgabe5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            
+        }
+
+        public class Person
+        {
+            string name;
+            int age;
+        }
+
+        public class Teilnehmer : Person
+        {
+            int matrikelnr;
+
+            string[] kurse;
+
+            
+        }
+        public class Dozent : Person
+        {
+            double raum;
+            DateTime bueroStunden;
+
+            string[] kurse;
+
+            
+        }
+        public class Kurs
+        {
+            string titel;
+            DateTime kursStunden;
+            float raum;
+            string dozent;
+            string[] teilnehmer;
+        }
+    }
+}
