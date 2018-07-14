@@ -5,7 +5,8 @@ using System.Data;
 namespace TextAdventure
 {
    
- public class Item{
+    public class Item
+    {
         public string name;
     }
 }

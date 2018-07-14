@@ -2,30 +2,41 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 
-namespace TextAdventure{
-    public class Game{
-            Player player;
-         public void BuildGame () {
+namespace TextAdventure
+{
+    public class Game
+    {
+        Player player;
+        List<Room> Rooms = new List<Room>();
+        Enemy e1;
+        Enemy e2;
+            
+        public void BuildGame ()
+        {
             DataTable data = GetTable();
 
             //Create rooms
-            List<Room> Rooms = new List<Room>();
-            foreach (DataRow row in data.Rows) {
+            foreach (DataRow row in data.Rows) 
+            {
                 string _name = row["Name"].ToString();
                 Rooms.Add( new Room() {name=_name});
             }
 
             //Create doors
             int ir = 0;
-            foreach (DataRow row in data.Rows) {    // all rows
-                String direction = "";
-                String nextroom = "";
+            foreach (DataRow row in data.Rows)
+            {    
+                // all rows
+                string direction = "";
+                string nextroom = "";
                 Room neighbour;
 
-                for (int i = 0; i < 4; i++)     // all directions
+                // all directions
+                for (int i = 0; i < 4; i++)     
                 {
                     //get next room
-                    switch(i) {
+                    switch(i) 
+                    {
                     case 0:
                         direction = "North";
                         break;
@@ -45,14 +56,17 @@ namespace TextAdventure{
                     {
                         //search room in list
                         neighbour = null;
-                        for (int r = 0; r < Rooms.Count; r++) {
-                            if (Rooms[r].name == nextroom) {
+                        for (int r = 0; r < Rooms.Count; r++)
+                        {
+                            if (Rooms[r].name == nextroom)
+                            {
                                 neighbour = Rooms[r];
                             }
                         }
 
                         //set neighbours
-                        switch(direction) {
+                        switch(direction)
+                        {
                         case "North":
                             Rooms[ir].north = neighbour;
                             break;
@@ -67,9 +81,7 @@ namespace TextAdventure{
                             break;
                         }
                     }
-
                 }
-
                 ir++;
             }
 
@@ -90,19 +102,28 @@ namespace TextAdventure{
             Rooms[4].RoomItems.Add(new Item{name="Cerveza"});
 
 
-            player = new Player("Ju",Rooms[0]);
-            //p1.position = Rooms[(int)enumRooms.Germany];
+            player = new Player("Ju",Rooms[RandomRoom()]);
 
-            Enemy e1 = new Enemy("Monster",Rooms[1]);
-            e1.position = Rooms[1];
+            e1 = new Enemy("Monster",Rooms[RandomRoom()]);
 
-            Enemy e2 = new Enemy("Monster 2",Rooms[4]);
-            e1.position = Rooms[4];
-
-
+            e2 = new Enemy("Monster 2",Rooms[RandomRoom()]);
+        }
+        
+        int RandomRoom()
+        {
+            Random randomNumber = new Random();   
+            int random = randomNumber.Next(0,Rooms.Count);
+            return random;
+        }
+        int RandomMove()
+        {
+            Random randomNumber = new Random();   
+            int random = randomNumber.Next(0,4);
+            return random;
         }
 
-       static DataTable GetTable() {
+        static DataTable GetTable()
+        {
             DataTable table = new DataTable();
 
             //Define columns
@@ -120,88 +141,111 @@ namespace TextAdventure{
             table.Rows.Add("Spain", "France","","Italy","");
             return table;
         }
-        void show(Player p)
+        public void Play()
         {
-            Enemy _enemy = p.position.getEnemy();
-            if( _enemy!= null){
-                Console.WriteLine("In " +p.position.name +" befindet sich ein " +_enemy.name +" mit dem Gesundheitszustand "+_enemy.health +". Wollen Sie es mit <a> angreifen?");
-            }
-            Console.WriteLine("Sie befinden sich in " +p.position.name +" Geben Sie north(n), east(e), west(w) oder south(s) ein um sich zu bewegen.");
-            p.position.look();
-            Console.WriteLine("Ihr Gesundheitszustand beträgt " +p.health);
-            
-        }
-        void take(Player p)
-        {
-            Console.WriteLine("Welches Item wollen Sie?");
-            string item = Console.ReadLine();
-            Item takeItem = p.position.take(item);
-            p.insert(takeItem);
-            //p.inventory();
-        }
-        void drop(Player p)
-        {
-            Console.WriteLine("Welches Item wollen Sie ablegen?");
-            string item = Console.ReadLine();
-           
-            Item dropItem = p.delete(item);
-            p.position.drop(dropItem);
-            //p.inventory();
-        }
-        void commands(){
-            Console.WriteLine("commands(c), look(l), inventory(i), take(t) item, drop(d) item, quit(q)");
-        }
-        public void play(){
-             string input = ""; 
-            while (input != "q"){ 
-                show(player);
+            string input = ""; 
+            while (input != "q")
+            { 
+                if(input == "n" || input == "s" || input == "e" || input == "w")
+                {
+                    int x = RandomRoom();
+                    switch(x)
+                    {
+                    case 0:
+                        e1.Move("n");
+                        break;
+                    case 1:
+                        e1.Move("s");
+                        break;
+                    case 2:
+                        e1.Move("w");
+                        break;
+                    case 3:
+                        e1.Move("e");
+                        break;
+                    }
+                }
+                Show(player);
                 input = Console.ReadLine(); 
                 
-                try{
-                    if (input != "q") {
-                        switch(input) {
+                try
+                {
+                    if (input != "q") 
+                    {
+                        switch(input) 
+                        {
                             case "q":
                                 break;
                             case "l":
-                                show(player);
+                                Show(player);
                                 break;
                             case "i":
-                                player.inventory();
+                                player.Inventory();
                                 break;
                             case "c":
-                                commands();
+                                Commands();
                                 break;    
                             case "d":
-                                drop(player);
+                                Drop(player);
                                 break;    
                             case "t":
-                                take(player);
+                                Take(player);
                                 break;    
                             case "n":
-                                player.move(input);
+                                player.Move(input);
                                 break;
                             case "e":
-                                player.move(input);
+                                player.Move(input);
                                 break;
                             case "s":
-                                player.move(input);
+                                player.Move(input);
                                 break;
                             case "w":
-                                player.move(input);
+                                player.Move(input);
                                 break;
                             case "a":
-                                player.attack();
+                                player.Attack();
                                 break;    
                             default:
-                                Console.WriteLine("Go to an other direction.");
+                                Console.WriteLine("Falsche Eingabe");
                                 break;
                         }
                     }
 
-                } catch(Exception){
-                     Console.WriteLine("Please enter n, s, w or e ");
-                    }    
+                } catch(Exception)
+                {
+                     Console.WriteLine("Falsche Eingabe");
+                }    
             }
+        }
+        void Show(Player p)
+        {
+            Enemy _enemy = p.position.GetEnemy();
+            Console.WriteLine("");
+            Console.WriteLine("Sie befinden sich in " +p.position.name +" und Ihr Gesundheitszustand beträgt "+p.health+". Geben Sie north(n), east(e), west(w) oder south(s) ein um sich zu bewegen.");
+            p.position.Look();
+            if( _enemy!= null)
+            {
+                Console.WriteLine("In " +p.position.name +" befindet sich ein " +_enemy.name +" mit dem Gesundheitszustand "+_enemy.health +". Wollen Sie es mit <a> angreifen?");
+            }
+        }
+        void Take(Player p)
+        {
+            Console.WriteLine("Welches Item wollen Sie?");
+            string item = Console.ReadLine();
+            Item takeItem = p.position.Take(item);
+            p.Insert(takeItem);
+        }
+        void Drop(Player p)
+        {
+            Console.WriteLine("Welches Item wollen Sie ablegen?");
+            string item = Console.ReadLine();
+            Item dropItem = p.Delete(item);
+            p.position.Drop(dropItem);
+        }
+        void Commands()
+        {
+            Console.WriteLine("commands(c), look(l), inventory(i), take(t) item, drop(d) item, quit(q)");
         }
     }
 }
