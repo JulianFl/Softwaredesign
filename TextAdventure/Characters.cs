@@ -22,7 +22,7 @@ namespace TextAdventure
         {
             for(int i=0; i<PlayerItems.Count; i++)
             {
-                Console.WriteLine("Ihre Items sind: " +PlayerItems[i].Name);
+                Console.WriteLine("Ihr Item: " +PlayerItems[i].Name);
             }
         }
         public void Insert(Item item)
@@ -67,8 +67,9 @@ namespace TextAdventure
             }    
             if (_newRoom==null)
             {                   
-                if( this.GetType() == typeof(Player)){
-                    Console.WriteLine(this.Name+": Diesen Weg gibt es nicht. Ihr Kontostand hat sich reduziert"); 
+                if( this.GetType() == typeof(Player))
+                {
+                    Console.WriteLine(this.Name+": Diesen Weg gibt es nicht. Ihr Kontostand hat sich um 5 Euro reduziert"); 
                     this.Total -= 5;
                 }
                 
@@ -78,7 +79,9 @@ namespace TextAdventure
                 {
                     Position = _newRoom;
                     _oldRoom.Exit(this);
+                    if(this.GetType() == typeof(Player)){
                     Console.WriteLine(this.Name +": ging von " +_oldRoom.Name +" nach " +_newRoom.Name);
+                    }
                     _newRoom.Entry(this);
                 }
             }

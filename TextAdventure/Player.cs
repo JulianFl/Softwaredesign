@@ -19,12 +19,11 @@ namespace TextAdventure
         int EnemyRandomTotal()
         {
             Random _randomNumber = new Random();   
-            int _random = _randomNumber.Next(0,30);
+            int _random = _randomNumber.Next(0,20);
             return _random;
         }
         public void Attack()
         {         
-            Game game= new Game();
             int _reduce = MyRandomTotal();
             Total = Total - _reduce;
             int _myreduce = _reduce;
@@ -35,9 +34,9 @@ namespace TextAdventure
             int _enemyReduce = _reduce;
             enemy.Total -= _reduce;  
             
-            Console.WriteLine( "Der Kontostand von "+enemy.Name +" hat sich um " +_reduce +" Euro verringert.");
+            Console.WriteLine( "Der Kontostand von deinem Gegner hat sich um " +_reduce +" Euro verringert.");
             if(_myreduce < _enemyReduce){
-                Console.WriteLine("Sie haben das Duell gegen "+enemy.Name +" gewonnen. Sie können nun ein Item von " +enemy.Name +" haben.");
+                Console.WriteLine("Sie haben das Duell gegen "+enemy.Name +" gewonnen. Sie können nun ein Item von " +enemy.Name +" hinzufügen indem Sie den Namen des Items eingeben.");
                 TakeEnemyItems();
             }
             if (enemy.Total <= 0){
@@ -48,14 +47,15 @@ namespace TextAdventure
         {
             string _item = Console.ReadLine();
             Item _take = null;
+            Enemy _enemy = null;
             for(int i=0; i < Position.GetEnemy().PlayerItems.Count ;i++)
             {
-                if(Position.GetEnemy().PlayerItems[i].Name == _item)
+                _enemy = Position.GetEnemy();
+                if(_enemy.PlayerItems[i].Name == _item)
                 {
-                    _take = Position.GetEnemy().PlayerItems[i];
-                    PlayerItems.Remove(Position.GetEnemy().PlayerItems[i]);
+                    _take = _enemy.PlayerItems[i];
+                    _enemy.PlayerItems.Remove(_take);
                     Insert(_take);
-                    Position.GetEnemy().PlayerItems.Remove(PlayerItems[i]);
 
                     Console.WriteLine("Sie haben " +_item +" erfolgreich hinzugefügt.");
                 }

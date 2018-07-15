@@ -13,13 +13,13 @@ namespace TextAdventure
         public  Room South; 
         public  Room West; 
         public  Room East;
-        public void Exit (Characters player)
+        public void Exit (Characters character)
         {
-            RoomPlayers.Remove(player);
+            RoomPlayers.Remove(character);
         }
-        public void Entry (Characters player)
+        public void Entry (Characters character)
         {
-            RoomPlayers.Add(player);
+            RoomPlayers.Add(character);
         }
 
         public Enemy GetEnemy()

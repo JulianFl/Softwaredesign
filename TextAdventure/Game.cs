@@ -99,14 +99,14 @@ namespace TextAdventure
             //Set room items
             Player = new Player("Ju",Rooms[RandomRoom()]);
 
-            E1 = new Enemy("Zoll",Rooms[RandomRoom()]);
-            E1.PlayerItems.Add(new Item{Name="Item1"});
-            E1.PlayerItems.Add(new Item{Name="Item1"});
+            E1 = new Enemy("Spielhalle",Rooms[RandomRoom()]);
+            E1.PlayerItems.Add(new Item{Name="Uhr"});
+            E1.PlayerItems.Add(new Item{Name="Halskette"});
             
 
-            E2 = new Enemy("Mautstelle",Rooms[RandomRoom()]);
-            E2.PlayerItems.Add(new Item{Name="Item2"});
-            E2.PlayerItems.Add(new Item{Name="Item2"});
+            E2 = new Enemy("Casino",Rooms[RandomRoom()]);
+            E2.PlayerItems.Add(new Item{Name="Brille"});
+            E2.PlayerItems.Add(new Item{Name="Handy"});
             
         }
         
@@ -235,12 +235,16 @@ namespace TextAdventure
             {
                 Enemy _enemy = p.Position.GetEnemy();
                 Console.WriteLine("");
-                Console.WriteLine("Sie befinden sich in " +p.Position.Name +" und Ihr Kontostand beträgt "+p.Total+" Euro. Geben Sie north(n), east(e), west(w) oder south(s) ein um sich zu bewegen.");
+                Console.WriteLine("Sie befinden sich in " +p.Position.Name +" und Ihr Kontostand beträgt "+p.Total+" Euro. Geben Sie Norden(n), Osten(e), Westen(w) oder Süden(s) ein um sich zu bewegen.");
                 p.Position.Look();
                 if( _enemy!= null)
                 {
-                    Console.WriteLine("In " +p.Position.Name +" befindet sich ein " +_enemy.Name +" mit einem Kontostand von "+_enemy.Total +" Euro. Wollen Sie mit <a> angreifen?");
-                    Look(p);
+                    Console.WriteLine("Sie sind in einer/einem " +_enemy.Name +", wo Sie auf einen Gegner treffen. Dein Gegner hat ein Kontostand von "+_enemy.Total +" Euro. Wollen Sie gegen ihn mit<a> spielen um ein Item von ihm zu gewinnen? Seine Items:");
+                    if(p.Position.GetEnemy().PlayerItems.Count != 0){
+                        for(int i = 0 ; i < p.Position.GetEnemy().PlayerItems.Count ;i++){
+                            Console.WriteLine(p.Position.GetEnemy().PlayerItems[i].Name);
+                        }
+                    }
                 }
             }
             void Take(Player p)
@@ -260,13 +264,6 @@ namespace TextAdventure
             void Commands()
             {
                 Console.WriteLine("commands(c), look(l), inventory(i), take(t) item, drop(d) item, quit(q)");
-            }
-            void Look(Player p)
-                {            
-                Console.WriteLine("Hallo. Sie sind an einer " +p.Position.GetEnemy().Name +". Wenn Sie nichts zahlen wollen, attackieren<a> Sie mich. Meine Items sind: ");
-                for(int i = 0 ; i < p.Position.GetEnemy().PlayerItems.Count ;i++){
-                    Console.WriteLine(p.Position.GetEnemy().PlayerItems[i].Name);
-                }
             }
         }
     }   
