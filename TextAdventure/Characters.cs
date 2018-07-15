@@ -79,8 +79,9 @@ namespace TextAdventure
                 {
                     Position = _newRoom;
                     _oldRoom.Exit(this);
-                    if(this.GetType() == typeof(Player)){
-                    Console.WriteLine(this.Name +": ging von " +_oldRoom.Name +" nach " +_newRoom.Name);
+                    if(this.GetType() == typeof(Player))
+                    {
+                        Console.WriteLine(this.Name +": ging von " +_oldRoom.Name +" nach " +_newRoom.Name);
                     }
                     _newRoom.Entry(this);
                 }
