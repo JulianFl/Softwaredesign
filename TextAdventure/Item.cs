@@ -7,6 +7,6 @@ namespace TextAdventure
    
     public class Item
     {
-        public string name;
+        public string Name;
     }
 }

@@ -7,24 +7,22 @@ namespace TextAdventure
     public class Characters
     {
         
-        public int health = 100;
-        public string name;
+        public int Total = 100;
+        public string Name;
         public List<Item> PlayerItems = new List<Item>();
-        public Room position;
+        public Room Position;
         public Characters(string _name,Room _position)
         {
-            position = _position;
-            name = _name;
-            position.Entry(this);
+            Position = _position;
+            Name = _name;
+            Position.Entry(this);
         }
-        public void Look()
-        {            
-        }
+       
         public void Inventory()
         {
             for(int i=0; i<PlayerItems.Count; i++)
             {
-                Console.WriteLine("Ihre Items sind: " +PlayerItems[i].name);
+                Console.WriteLine("Ihre Items sind: " +PlayerItems[i].Name);
             }
         }
         public void Insert(Item item)
@@ -33,53 +31,55 @@ namespace TextAdventure
         }
         public Item Delete(string item)
         {
-            Item drop = null;
+            Item _drop = null;
             for(int i=0; i < PlayerItems.Count ;i++)
             {
-                if(PlayerItems[i].name == item)
+                if(PlayerItems[i].Name == item)
                 {
-                        drop = PlayerItems[i]; 
+                        _drop = PlayerItems[i]; 
                         PlayerItems.Remove(PlayerItems[i]);
                 }
             }
-            return drop;
+            return _drop;
         }
         public void Move(string input)
         {
-            Room newRoom;
-            Room oldRoom=position;
+            Room _newRoom;
+            Room _oldRoom = Position;
             switch(input)
             {
             case "n":
-                newRoom = position.north; 
+                _newRoom = Position.North; 
                 break;
             case "s":
-                newRoom = position.south;
+                _newRoom = Position.South;
                 break;
             case "w":
-                newRoom = position.west;
+                _newRoom = Position.West;
                 break;
             case "e": 
-                newRoom = position.east;
+                _newRoom = Position.East;
                 break;
             default:
                 Console.WriteLine("Falsche Eingabe"); 
-                newRoom = position;
+                _newRoom = Position;
                 break;
             }    
-            if (newRoom==null)
-            {
-                Console.WriteLine(this.name+": Diesen Weg gibt es nicht. Ihr Gesundheitszustand hat sich reduziert"); 
-                this.health -= 5;
-
+            if (_newRoom==null)
+            {                   
+                if( this.GetType() == typeof(Player)){
+                    Console.WriteLine(this.Name+": Diesen Weg gibt es nicht. Ihr Kontostand hat sich reduziert"); 
+                    this.Total -= 5;
+                }
+                
             }else
             {
-                if (newRoom != position)
+                if (_newRoom != Position)
                 {
-                    position = newRoom;
-                    oldRoom.Exit(this);
-                    Console.WriteLine(this.name +": ging von "+oldRoom.name +" nach " +newRoom.name);
-                    newRoom.Entry(this);
+                    Position = _newRoom;
+                    _oldRoom.Exit(this);
+                    Console.WriteLine(this.Name +": ging von " +_oldRoom.Name +" nach " +_newRoom.Name);
+                    _newRoom.Entry(this);
                 }
             }
         }

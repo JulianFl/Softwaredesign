@@ -9,5 +9,6 @@ namespace TextAdventure
         public Enemy(string _name,Room _position) : base(_name,_position)
         {
         }
+        
     }
 }
